@@ -11,7 +11,7 @@ CHECKSUM equ -(MAGIC + FLAGS)   ; checksum of above, to prove we are multiboot
 ; 32-bit boundary. The signature is in its own section so the header can be
 ; forced to be within the first 8 KiB of the kernel file.
 section .multiboot
-align 4
+	align 4
 	dd MAGIC
 	dd FLAGS
 	dd CHECKSUM
@@ -27,9 +27,9 @@ align 4
 ; stack is properly aligned and failure to align the stack will result in
 ; undefined behavior.
 section .bss
-align 16
+	align 16
 stack_bottom:
-resb 16384 ; 16 KiB
+	resb 16384
 stack_top:
  
 ; The linker script specifies _start as the entry point to the kernel and the

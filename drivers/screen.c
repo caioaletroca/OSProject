@@ -1,10 +1,13 @@
 #include "screen.h"
 #include "ports.h"
+#include "../kernel/utils.h"
 
 // Private Methods Declaration
 int get_cursor_offset();
 void set_cursor_offset(int offset);
 int print_char(char character, int col, int row, char attribute_byte);
+int handle_scrolling(int offset);
+void clear_line(int row);
 int get_offset(int col, int row);
 int get_offset_row(int offset);
 int get_offset_col(int offset);
@@ -76,10 +79,27 @@ int print_char(char character, int col, int row, char attribute_byte) {
 
 	// Make scrolling adjustment, for when we reach the bottom
 	// of the screen.
-	//offset = handle_scrolling(offset);
+	offset = handle_scrolling(offset);
 
 	// Update the cursor position on the screen device.
 	set_cursor_offset(offset);
+	return offset;
+}
+
+int handle_scrolling(int offset) {
+	if(offset >= MAX_ROWS * MAX_COLS * 2) {
+		for(int i = 1; i < MAX_ROWS; i++)
+			memcpy(
+				get_offset(0, i) + (unsigned char*) VIDEO_ADDRESS,
+				get_offset(0, i - 1) + (unsigned char*) VIDEO_ADDRESS,
+				MAX_COLS * 2
+			);
+
+		clear_line(MAX_ROWS - 1);
+
+		offset = get_offset(0, MAX_ROWS - 1);
+	}
+
 	return offset;
 }
 
@@ -126,6 +146,15 @@ void clear_screen() {
 		screen[i * 2 + 1] = WHITE_ON_BLACK;
 	}
 	set_cursor_offset(get_offset(0, 0));
+}
+
+void clear_line(int row) {
+	char *line = get_offset(0, row) + (unsigned char*) VIDEO_ADDRESS;
+	for(int i = 0; i < MAX_COLS * 2; i++) {
+		line[i * 2] = ' ';
+		line[i * 2 + 1] = WHITE_ON_BLACK;
+	}
+
 }
 
 /**
