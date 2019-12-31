@@ -16,6 +16,7 @@ run: all
 os-image: boot/boot.bin kernel/kernel.bin
 	copy /b boot\\boot.bin + kernel\\kernel.bin build\\os-image
 
+# Build the C code into binary
 kernel/kernel.bin: kernel/kernel_entry.o ${OBJ}
 	ld -T NUL -o build/kernel.tmp -Ttext 0x1000 $^
 	objcopy -O binary -j .text build/kernel.tmp kernel/kernel.bin
@@ -30,9 +31,6 @@ kernel/kernel.bin: kernel/kernel_entry.o ${OBJ}
 	nasm $< -f elf -o $@
 %.bin : %.asm
 	nasm $< -f bin -i boot -o $@
-
-kernel.o : ./kernel/kernel.c
-	gcc -ffreestanding -c $< -o $@
 
 clean:
 	del /s /q /f *.bin *.dis *.o *.tmp os-image
