@@ -5,5 +5,4 @@ void kmain() {
 
 	clear_screen();
 	print(test);
-	print("Hello Nice Day!!!");
 }

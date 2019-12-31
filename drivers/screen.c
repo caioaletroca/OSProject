@@ -20,7 +20,7 @@ void print_at(char *message, int col, int row) {
 	if(col >= 0 && row >= 0) {
 		set_cursor_offset(get_offset(col, row));
 	}
-	//print_char((char)message[0], 1, 1, WHITE_ON_BLACK);
+	
 	int i = 0;
 	while(message[i] != 0) {
 		offset = print_char(message[i++], col, row, WHITE_ON_BLACK);
