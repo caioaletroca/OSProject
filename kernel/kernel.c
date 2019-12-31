@@ -1,8 +1,6 @@
 #include "../drivers/screen.h"
 
 void kmain() {
-	char test[] = "Hello World!!!\n";
-
 	clear_screen();
-	print(test);
+	print_at("Hello World!!!\n", 10, 10);
 }
