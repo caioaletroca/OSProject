@@ -1,5 +1,9 @@
-void kmain() {
-	char* video_memory = (char*) 0xb8000;
+#include "../drivers/screen.h"
 
-	*video_memory = 'X';
+void kmain() {
+	char test[] = "Hello World!!!\n";
+
+	clear_screen();
+	print(test);
+	print("Hello Nice Day!!!");
 }

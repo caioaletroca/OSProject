@@ -6,15 +6,15 @@ HEADERS = $(wildcard kernel/*.h drivers/*.h )
 OBJ = ${C_SOURCES:.c=.o}
 
 # Defaul build target
-all: os-image
+all: os-image.bin
 
 run: all
-	qemu-system-x86_64 build\\os-image
+	qemu-system-x86_64 build\\os-image.bin
 
 # This is the actual disk image that the computer loads
 # which is the combination of our compiled bootsector and kernel
-os-image: boot/boot.bin kernel/kernel.bin
-	copy /b boot\\boot.bin + kernel\\kernel.bin build\\os-image
+os-image.bin: boot/boot.bin kernel/kernel.bin
+	copy /b boot\\boot.bin + kernel\\kernel.bin build\\os-image.bin
 
 # Build the C code into binary
 kernel/kernel.bin: kernel/kernel_entry.o ${OBJ}
@@ -33,5 +33,5 @@ kernel/kernel.bin: kernel/kernel_entry.o ${OBJ}
 	nasm $< -f bin -i boot -o $@
 
 clean:
-	del /s /q /f *.bin *.dis *.o *.tmp os-image
+	del /s /q /f *.bin *.dis *.o *.tmp os-image.bin
 	del /s /q /f kernel/*.o boot/*.bin drivers/*.o build/*
