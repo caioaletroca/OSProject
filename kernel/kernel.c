@@ -1,10 +1,13 @@
 #include "../drivers/screen.h"
 #include "utils.h"
+#include "../cpu/idt.h"
+#include "../cpu/isr.h"
 
 void kmain() {
 	clear_screen();
 
-	print_at("Hello World!!!\n", 0, 24);
-	print("Hello World!!!\n");
-	print("Hello World With Scroll!!!\n");
+	isr_install();
+    /* Test the interrupts */
+    __asm__ __volatile__("int $2");
+    __asm__ __volatile__("int $3");
 }

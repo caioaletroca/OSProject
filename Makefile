@@ -3,7 +3,7 @@ C_SOURCES = $(wildcard kernel/*.c drivers/*.c)
 HEADERS = $(wildcard kernel/*.h drivers/*.h )
 
 # Convert the *.c filenames to *.o to give a list of object files to build
-OBJ = ${C_SOURCES:.c=.o}
+OBJ = ${C_SOURCES:.c=.o cpu/interrupt.o}
 
 # Defaul build target
 all: kernel.elf
@@ -26,5 +26,4 @@ kernel.elf: boot/boot.o kernel/kernel.o ${OBJ}
 	nasm $< -f elf32 -o $@
 
 clean:
-	del /s /q /f *.bin *.dis *.o *.tmp kernel.elf
-	del /s /q /f kernel/*.o boot/*.bin drivers/*.o build/*
+	del /s /q /f *.bin *.o *.tmp build/*
