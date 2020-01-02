@@ -7,7 +7,7 @@ void kmain() {
 	clear_screen();
 
 	isr_install();
-    /* Test the interrupts */
-    __asm__ __volatile__("int $2");
-    __asm__ __volatile__("int $3");
+    
+    __asm__ __volatile__("int $0");
+    //__asm__ __volatile__("int $3");
 }
