@@ -6,7 +6,7 @@
  * @param n       [description]
  * @param handler [description]
  */
-void set_idt_gate(int n, int handler) {
+void set_idt_gate(int n, unsigned int handler) {
     idt[n].low_offset = (short)((handler) & 0xFFFF);
     idt[n].sel = KERNEL_CS;
     idt[n].zero = 0;
@@ -18,7 +18,7 @@ void set_idt_gate(int n, int handler) {
  * Sets the IDT register size
  */
 void set_idt() {
-    idt_reg.base = (int) &idt;
+    idt_reg.base = (unsigned int) &idt;
     idt_reg.limit = IDT_ENTRIES * sizeof(idt_gate_t) - 1;
     
     __asm__ __volatile__(

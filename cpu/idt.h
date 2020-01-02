@@ -10,17 +10,17 @@ typedef struct {
     /**
      * The lower 16 bits of handler function address
      */
-    short low_offset;
+    unsigned short low_offset;
 
     /**
      * Kernel segment selector
      */
-    short sel;
+    unsigned short sel;
 
     /**
      * Unused data, always zero
      */
-    char zero;
+    unsigned char zero;
 
     /* 
      * First byte
@@ -29,12 +29,12 @@ typedef struct {
      * Bit 4: Set to 0 for interrupt gates
      * Bits 3-0: bits 1110 = decimal 14 = "32 bit interrupt gate"
      */
-    char flags; 
+    unsigned char flags; 
 
     /**
      * Higher 16 bits of handler function address
      */
-    short high_offset;
+    unsigned short high_offset;
 } __attribute__((packed)) idt_gate_t;
 
 /*
@@ -42,8 +42,8 @@ typedef struct {
  * Assembly instruction 'lidt' will read it
  */
 typedef struct {
-    short limit;
-    int base;
+    unsigned short limit;
+    unsigned int base;
 } __attribute__((packed)) idt_register_t;
 
 // Properties
@@ -51,7 +51,7 @@ idt_gate_t idt[IDT_ENTRIES];
 idt_register_t idt_reg;
 
 // Methods
-void set_idt_gate(int n, int handler);
+void set_idt_gate(int n, unsigned int handler);
 void set_idt();
 
 #endif
