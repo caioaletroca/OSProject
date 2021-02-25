@@ -7,11 +7,11 @@
  * @param handler [description]
  */
 void set_idt_gate(int n, unsigned int handler) {
-    idt[n].low_offset = (short)((handler) & 0xFFFF);
+    idt[n].low_offset = low16(handler);
     idt[n].sel = KERNEL_CS;
     idt[n].zero = 0;
     idt[n].flags = 0x8E; 
-    idt[n].high_offset = (short)(((handler) >> 16) & 0xFFFF);
+    idt[n].high_offset = high16(handler);
 }
 
 /**

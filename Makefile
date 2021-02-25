@@ -19,7 +19,7 @@ kernel.elf: boot/boot.o kernel/kernel.o ${OBJ}
 # Generic rule for compiling C code to an object file
 # For simplicity , we C files depend on all header files .
 %.o : %.c ${HEADERS}
-	gcc -ffreestanding -c $< -o $@
+	gcc -ffreestanding -mno-red-zone -c $< -o $@
 
 # Assemble the kernel_entry .
 %.o : %.asm

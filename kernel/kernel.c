@@ -6,8 +6,8 @@
 void kmain() {
 	clear_screen();
 
-	isr_install();
+	// isr_install();
 
-    __asm__ __volatile__("int $1");
+    // __asm__ __volatile__("int $2");
     //__asm__ __volatile__("int $3");
 }

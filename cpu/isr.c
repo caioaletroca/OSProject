@@ -86,7 +86,5 @@ void isr_install() {
 
 void isr_handler(registers_t r) {
     print("Received Interrupt: ");
-    print("\n");
-    print(exception_messages[r.int_no]);
-    print("\n");
+    //print(exception_messages[r.int_no]);
 }
